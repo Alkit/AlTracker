@@ -9,9 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 
-/**
- * Created by Alkit on 1/4/2017.
- */
 
 @Configuration
 @ComponentScan
