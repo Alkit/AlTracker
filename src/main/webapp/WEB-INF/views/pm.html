@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Admin page</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/adminStyle.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/semantic.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+</head>
+
+<body>
+<div>
+    <div class="ui top fixed menu">
+        <a class="item">
+            <img th:src="@{/resources/images/icon.png}">
+        </a>
+        <a id="tasks" class="item" >My Projects</a>
+        <a id="requests" class="item">Something else</a>
+        <a id="ptasks" class="item" >And else</a>
+        <form class="item ui button" th:action="@{/logout}" method="post">
+            <button class="linkButton" type="submit">Logout</button>
+        </form>
+    </div>
+    <div class="ui main four column stacked container">
+        <div class="column">
+            <div id="tree"></div>
+        </div>
+        <div class="eight wide column">
+            <table class="ui table">
+                <thead>
+                <tr>
+                    <th>Project name</th>
+                    <th>Beginning date</th>
+                    <th>Ending date</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project:${projects}" th:value="${project.projectId}">
+                    <td th:text="${project.projectName}"></td>
+                    <td th:text="${project.beginDate}"></td>
+                    <td th:text="${project.endDate}"></td>
+                    <td> <button class="selectProject ui mini button"> Select project</button> </td>
+                </tr>
+                </tbody>
+            </table>
+            <label id="red">Press me</label>
+            <input type="hidden" id="url" value="api/"></div>
+    </div>
+</div>
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script th:src="@{/resources/js/uiscript.js}"></script>
+
+    <script>
+        $('.selectProject').on('click',function (e) {
+            var id = $(this).parent().parent().attr('value');
+            $.ajax({
+                type:'POST',
+                url:"post/"+ id,
+                success: function () {
+                    window.location.replace("details/")
+                }
+            })
+        })
+    </script>
+</div>
+</body>
+</html>

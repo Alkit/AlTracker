@@ -1,0 +1,18 @@
+<div class="column">
+    <div class="ui segment" th:text="${'Project name: ' + project.projectName}"></div>
+</div>
+<div class="column">
+    <div class="ui segment" th:text="${'Customer name: ' + project.customerByCustomer.firstName + ' ' + project.customerByCustomer.lastName}"></div>
+</div>
+<div class="ui three column row">
+    <div class="column">
+        <div class="ui segment" th:text="${'Beginning date: ' + project.beginDate}"></div>
+    </div>
+    <div class="column">
+        <div class="ui segment"  th:text="${'Beginning date: ' + project.endDate}">Ending date:</div>
+    </div>
+    <div class="column">
+        <div class="ui segment"  th:text="${'Sprint number: ' + size}"></div>
+    </div>
+</div>
+

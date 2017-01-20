@@ -1,9 +1,10 @@
 package vasilenko.config;
 
 
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import vasilenko.web.WebConfig;
 
 import javax.servlet.Filter;
 
@@ -11,10 +12,6 @@ import javax.servlet.Filter;
 
 public class AlTrackerWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer  {
     public static final String CHARACTER_ENCODING = "UTF-8";
-
-    public AlTrackerWebInitializer(){
-        super();
-    }
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -36,7 +33,7 @@ public class AlTrackerWebInitializer extends AbstractAnnotationConfigDispatcherS
         final CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
         encodingFilter.setEncoding(CHARACTER_ENCODING);
         encodingFilter.setForceEncoding(true);
-        return new Filter[] { encodingFilter };
+        return new Filter[] { encodingFilter, new OpenEntityManagerInViewFilter()};
     }
 }
 

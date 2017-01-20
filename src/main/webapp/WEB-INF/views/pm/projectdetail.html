@@ -1,0 +1,156 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Admin page</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/adminStyle.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/semantic.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+</head>
+
+<body>
+<div>
+    <div class="ui top stackable menu">
+        <a class="item">
+            <img th:src="@{/resources/images/icon.png}">
+        </a>
+        <a id="tasks" class="item" th:href="@{/pm/}">My Projects</a>
+        <a id="requests" class="item">Something else</a>
+        <a id="ptasks" class="item">And some more</a>
+        <form class="item ui button" th:action="@{/logout}" method="post">
+            <button class="linkButton" type="submit">Logout</button>
+        </form>
+    </div>
+    <div class="ui main four column grid container">
+        <div class="column">
+            <div class="ui button" id="addTask">Add task</div>
+            <div id="tree"></div>
+        </div>
+        <div class="twelve wide column">
+            <h3 class="ui center aligned header">Project info</h3>
+            <div class="ui two column stackable grid" id="projectInfo" th:value="${projectId}">
+            </div>
+            <h3 class="ui center aligned header">Selected spring info</h3>
+            <div class="ui stackable grid" id="sprint">
+                <div class="ten wide column">
+                    <div class="ui segment">1.Sprint name | Number of tasks: N</div>
+                </div>
+            </div>
+            <h3 class="ui center aligned header">Selected task info</h3>
+            <div class="ui two column stackable grid" id="taskInfo">
+                <div class="column">
+                    <div class="ui segment">1.Task name</div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">Executor</div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">Beginning date</div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">Ending date</div>
+                </div>
+                <div class="ui three column row">
+                    <div class="column">
+                        <div class="ui segment">Estimate time</div>
+                    </div>
+                    <div class="column">
+                        <div class="ui segment">Actual time</div>
+                    </div>
+                    <div class="column">
+                        <div class="ui segment">Accepted at</div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="url" th:value="${'../../api/' + projectId}">
+        </div>
+    </div>
+    <div class="ui small modal" id="taskForm"><i class="close icon"></i>
+        <div class="ui dividing header">
+            Create task
+        </div>
+        <div class="content">
+            <div class="ui form">
+                <div class="four fields">
+                    <div class="field">
+                        <label>Task name</label>
+                        <div class="ui input" id="taskName">
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Estimate hours</label>
+                        <div class="ui input" id="estimateHours">
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Begin date</label>
+                        <div class="" id="bDate">
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>End date</label>
+                        <div class="ui input" id="eDate">
+                            <input type="date">
+                        </div>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <select class="ui dropdown">
+                            <option selected="selected">Add to sprint</option>
+                            <option th:each="sprint:${sprints}" th:value="${sprint.sprintId}" th:text="${sprint.sprintName}">some other</option>
+                        </select>
+                    </div>
+                    OR
+                    <div class="field">
+                        <select class="ui dropdown">
+                            <option selected="selected">Sub for task</option>
+                            <option> some other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <select class="ui dropdown">
+                            <option selected="selected">Qualification for task</option>
+                            <option th:each="qual:${quals}" th:value="${qual.qualId}" th:text="${qual.qualName}"> some other</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <select class="ui dropdown">
+                            <option selected="selected">Executor</option>
+                            <option th:each="emp:${employees}" th:value="${emp.empId}" th:text="${emp.firstName +' '+ emp.lastName}"> some other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button" id="close">
+                Cancel
+            </div>
+            <div class="ui positive right labeled icon button">
+                Add
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script th:src="@{/resources/semantic.min.js}"></script>
+    <script th:src="@{/resources/js/uiscript.js}"></script>
+    <script th:src="@{/resources/js/pm.js}"></script>
+
+
+</div>
+</body>
+</html>

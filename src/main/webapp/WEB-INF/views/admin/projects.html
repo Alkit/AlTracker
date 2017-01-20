@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Admin page</title>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/resources/adminStyle.css}"/>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/resources/semantic.min.css}"/>
+</head>
+
+<body>
+<div class="ui top fixed menu">
+  <a class="item" th:href="@{/admin/}">
+    <img th:src="@{/resources/images/icon.png}">
+  </a>
+  <a id="project" class="active item" >Projects</a>
+  <a id="employee" class="item" th:href="@{/admin/employees}">Employees</a>
+  <a id="customer" class="item" th:href="@{/admin/customers}">Customer</a>
+  <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
+</div>
+<div  class="ui main text container">
+  <div id="load">
+    <form id="projectForm" class="ui form nondisplay" method="post" th:action="projects" th:object="${projectForm}">
+      <div class="field">
+        <label>Project</label>
+        <input type="text" class="ui input" placeholder="Project name" th:field="*{projectName}">
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Project Manager</label>
+          <select class="ui dropdown" required="true" th:field="*{projectManagerId}">
+            <option th:each="pm:${employees}" th:value="${pm.empId}" th:text="${pm.firstName + ' ' + pm.lastName}"></option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Customer</label>
+          <select class="ui dropdown" th:field="*{customerId}">
+            <option th:each="c:${customers}" th:value="${c.customerId}" th:text="${c.firstName + ' ' + c.lastName}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Beginning date</label>
+          <input type="date" name="beginDate" class="ui input" th:field="*{beginDate}">
+        </div>
+        <div class="field">
+          <label>Ending date</label>
+          <input type="date" name="endDate" class="ui input" th:field="*{endDate}">
+        </div>
+      </div>
+      <button class="ui button red">ADD</button>
+    </form>
+    <table class="ui celled table">
+      <thead>
+      <tr><th>Project Name</th>
+        <th>Customer</th>
+        <th>Project manager</th>
+        <th> Beginning date</th>
+        <th> Ending date</th>
+      </tr></thead>
+      <tbody>
+      <tr th:each="project:${projects}">
+        <td th:text="${project.projectName}" th:value="${project.projectId}"></td>
+        <td th:text="${project.customerByCustomer.firstName + ' ' + project.customerByCustomer.lastName}"></td>
+        <td th:text="${project.employeeByProjectManager.firstName + ' ' + project.employeeByProjectManager.lastName}"></td>
+        <td th:text="${project.beginDate}"></td>
+        <td th:text="${project.endDate}"></td>
+      </tr>
+      <tfoot class="full-width">
+      <tr>
+        <th colspan="5">
+          <div id="addNew" class="ui right floated small primary labeled icon button">
+            <i class="user icon"></i> Add User
+          </div>
+        </th>
+      </tr>
+      </tfoot>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    var pf = $('#projectForm');
+    $('#addNew').on('click', function (e) {
+        pf.show()
+    })
+  </script>
+</div>
+
+</body>
+
+</html>
+

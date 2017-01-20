@@ -1,0 +1,108 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Admin page</title>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/resources/adminStyle.css}"/>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/resources/semantic.min.css}"/>
+</head>
+
+<body>
+<div class="ui top fixed menu">
+  <a class="item" th:href="@{/admin/}">
+    <img th:src="@{/resources/images/icon.png}">
+  </a>
+  <a id="project" class="item" th:href="@{/admin/projects}">Projects</a>
+  <a id="employee" class="active item">Employees</a>
+  <a id="customer" class="item" th:href="@{/admin/customers}">Customer</a>
+  <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
+</div>
+<div  class="ui main text container">
+  <div id="load">
+    <form id="employeeForm" class="ui form nondisplay" method="post" th:action="employees" th:object="${employeeForm}">
+      <label>Name</label>
+      <div class="two fields">
+        <div class="field">
+          <input type="text" class="ui input" placeholder="First Name" th:field="*{firstName}">
+        </div>
+        <div class="field">
+          <input type="text" class="ui input" placeholder="Last Name" th:field="*{lastName}">
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Role</label>
+          <select class="ui dropdown" required="true" th:field="*{roleId}">
+            <option th:each="role:${roles}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Qualification</label>
+          <select class="ui dropdown" th:field="*{qualId}">
+            <option th:each="qual:${quals}" th:value="${qual.qualId}" th:text="${qual.qualName}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="two fields">
+      <div class="field">
+        <label>Email</label>
+        <input class="ui input" type="text" th:field="*{email}">
+        </div>
+        <div class="field">
+          <label>Type</label>
+          <select class="ui dropdown" th:field="*{type}">
+            <option  value="ROLE_ADMIN"> Administrator</option>
+            <option  value="ROLE_USER"> User</option>
+            <option  value="ROLE_PM"> Project Manager</option>
+          </select>
+        </div>
+      </div>
+      <button class="ui button red">ADD</button>
+    </form>
+    <table class="ui celled table">
+      <thead>
+      <tr><th>First name</th>
+        <th>Last name</th>
+        <th>Role</th>
+        <th>Qualification</th>
+        <th>Email</th>
+        <th>Type</th>
+      </tr></thead>
+      <tbody>
+      <tr th:each="employee:${employees}">
+        <td th:text="${employee.firstName}" th:value="${employee.empId}"></td>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.roleByRole.roleName}"></td>
+        <td th:text="${employee.qualificationByQualification.qualName}"></td>
+        <td th:text="${employee.email}"></td>
+        <td th:text="${employee.type}"></td>
+      </tr>
+      <tr>
+      <tfoot class="full-width">
+      <tr>
+        <th colspan="6">
+          <div id="addNew" class="ui right floated small primary labeled icon button">
+            <i class="user icon"></i> Add User
+          </div>
+        </th>
+      </tr>
+      </tfoot>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+      var pf = $('#employeeForm');
+      $('#addNew').on('click', function (e) {
+          pf.show()
+      })
+  </script>
+</div>
+</body>
+</html>
+

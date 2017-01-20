@@ -1,0 +1,30 @@
+<div class="column">
+    <label>Task name</label>
+    <div class="ui segment" th:text="${task.number + '.' + task.taskName}">1.Task name</div>
+</div>
+<div class="column">
+    <label>Executor</label>
+    <div class="ui segment" th:text="${task.employeeByExecutor.firstName + ' ' + task.employeeByExecutor.lastName}">Executor</div>
+</div>
+<div class="column">
+    <label>Beginning date</label>
+    <div class="ui segment" th:text="${task.beginDate}">Beginning date</div>
+</div>
+<div class="column">
+    <label>Enging date</label>
+    <div class="ui segment" th:text="${task.endDate}">Ending date</div>
+</div>
+<div class="ui three column row">
+    <div class="column">
+        <label>Estimate time</label>
+        <div class="ui segment" th:text="${task.estimateHours}">Estimate time</div>
+    </div>
+    <div class="column">
+        <label>Actual time</label>
+        <div class="ui segment" th:text="${task.hoursSpented}">Actual time</div>
+    </div>
+    <div class="column">
+        <label>Accepted date</label>
+        <div class="ui segment" th:text="${task.acceptedAt}">Accepted at</div>
+    </div>
+</div>

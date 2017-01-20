@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin page</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/adminStyle.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/semantic.min.css}"/>
+</head>
+
+<body>
+<div class="ui top fixed menu">
+    <a class="item" th:href="@{/employee/}">
+        <img th:src="@{/resources/images/icon.png}">
+    </a>
+    <a id="tasks" class="item" th:href="@{/employee/mytasks}">Tasks</a>
+    <a id="requests" class="item" th:href="@{/employee/request}" >Time Requests</a>
+    <a id="ptasks" class="active item" >Proposed tasks</a>
+    <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
+</div>
+<div  class="ui main text container">
+    <div id="load">
+        <table class="ui celled table">
+            <thead>
+            <tr><th>Task name</th>
+                <th>Beginning date</th>
+                <th>Ending date</th>
+                <th> Estimate time</th>
+            </tr></thead>
+            <tbody>
+            <tr th:each="task:${tasks}">
+                <td th:text="${task.taskName}" th:value="${task.taskId}"></td>
+                <td th:text="${task.beginDate}"></td>
+                <td th:text="${task.endDate}"></td>
+                <td class="area">
+                    <span th:text="${task.estimateHours}"></span>
+                    <form class="inline"><button class="ui button">Accept</button></form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</div>
+</body>
+</html>

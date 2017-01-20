@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Admin page</title>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/resources/adminStyle.css}"/>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/resources/semantic.min.css}"/>
+</head>
+
+<body>
+<div class="ui top fixed menu">
+  <a class="item" th:href="@{/admin/}">
+    <img th:src="@{/resources/images/icon.png}">
+  </a>
+  <a id="project" class="item" th:href="@{/admin/projects}">Projects</a>
+  <a id="employee" class="item" th:href="@{/admin/employees}">Employees</a>
+  <a id="customer" class="item" >Customer</a>
+  <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
+</div>
+<div  class="ui main text container">
+  <div id="load">
+    <form id="customerForm" th:action="customers" method="post" class="ui form nondisplay" th:object="${customer}">
+      <label>Name</label>
+      <div class="two fields">
+        <div class="field">
+          <input type="text" class="ui input" placeholder="First Name" th:field="*{firstName}">
+        </div>
+        <div class="field">
+          <input type="text" class="ui input" placeholder="Last Name" th:field="*{lastName}">
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" class="ui input" placeholder="Email" th:field="*{email}">
+        </div>
+        <div class="field">
+          <label>Phone number</label>
+          <input type="text" class="ui input" placeholder="PhoneNumber" th:field="*{phoneNumber}">
+        </div>
+      </div>
+      <div class="field">
+        <button class="ui red button" type="submit"> ADD</button>
+      </div>
+    </form>
+    <table class="ui celled table">
+      <thead>
+      <tr><th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Phone number</th>
+      </tr></thead>
+      <tbody>
+      <tr th:each="customer:${customers}">
+        <td th:text="${customer.firstName}" th:value="${customer.customerId}">
+          <div class="id nondisplay" th:text="${}" >
+          </div>
+        </td>
+        <td th:text="${customer.lastName}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.phoneNumber}"></td>
+      </tr>
+      <tr>
+      <tfoot class="full-width">
+      <tr>
+        <th colspan="4">
+          <div id="addNew" class="ui right floated small primary labeled icon button">
+            <i class="user icon"></i> Add User
+          </div>
+        </th>
+      </tr>
+      </tfoot>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+<div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+      var pf = $('#customerForm');
+
+      $('#addNew').on('click', function (e) {
+          pf.show()
+      })
+  </script>
+</div>
+</body>
+</html>

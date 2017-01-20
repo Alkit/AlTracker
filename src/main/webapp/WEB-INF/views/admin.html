@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title>Admin page</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/adminStyle.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/semantic.min.css}"/>
+</head>
+
+<body>
+    <div class="ui top fixed menu">
+        <a class="item">
+            <img th:src="@{/resources/images/icon.png}">
+        </a>
+        <a id="project" class="item" th:href="@{/admin/projects}">Projects</a>
+        <a id="employee" class="item" th:href="@{/admin/employees}">Employees</a>
+        <a id="customer" class="item" th:href="@{/admin/customers}">Customer</a>
+        <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
+    </div>
+    <div  class="ui main text container">
+        <div id="load"></div>
+    </div>
+    <div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    </div>
+</body>
+</html>
