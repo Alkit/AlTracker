@@ -30,13 +30,15 @@ tree.jstree({
                     }
                 },
                 "Delete": {
-                    "label": "Delete",
+                    "label": "Delete sprint",
                     "action": function (data) {
+                        console.log(data)
+
                         var ref = $.jstree.reference(data.reference),
                             sel = ref.get_selected();
+
                         if(!sel.length) { return false; }
                         ref.delete_node(sel);
-
                     }
                 }
             };
@@ -62,12 +64,10 @@ tree.jstree({
             data: deletedNode,
             url: '../../sprint/delete',
         })
-        console.log("ajax sended")
     }
 });
 var pid = $('#projectInfo').attr('value')
 $('#projectInfo').load('../project/'+pid)
-
 
 $('#tree').on('select_node.jstree', function (e,selected) {
     var id = selected.selected[0].slice(1);
@@ -86,3 +86,58 @@ $('#addTask').on('click',function () {
         closable: false
     }).modal('show')
 })
+
+$('#taskF').form({
+    on: ['submit'],
+    fields:{
+        taskName:{
+            identifier: 'taskName',
+            rules: [{
+                type: 'empty' ,
+                prompt : 'Please enter task name'
+            }]
+        },
+        estimate: {
+            identifier: 'estimateHours',
+            rules: [{
+                type: 'integer',
+                prompt: 'Please enter number of hours'
+            }]
+        },
+        executor: {
+            identifier: 'executor',
+            rules: [{
+                type: 'empty',
+                prompt: 'Please choose executor'
+            }]
+        },
+        qualification: {
+            identifier: 'qualification',
+            rules: [{
+                type: 'empty',
+                prompt: 'Please choose qualification'
+            }]
+        },
+        taskToSprint: {
+            identifier: 'sprint',
+            rules: [{
+                type: 'empty',
+                prompt: 'Please choose sprint or subtask'
+            }]
+        },
+        bDate: {
+            identifier: 'beginDate',
+            rules: [{
+                type: 'empty',
+                prompt: 'Please enter beginning date'
+            }]
+        },
+        eDate: {
+            identifier: 'endDate',
+            rules: [{
+                type: 'empty',
+                prompt: 'Please enter ending date'
+            }]
+        }
+    }
+});

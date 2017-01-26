@@ -6,13 +6,12 @@ import vasilenko.model.Project;
 import vasilenko.model.Sprint;
 import vasilenko.repository.ProjectRepository;
 import vasilenko.repository.SprintRepository;
+import vasilenko.repository.impl.JPASprintRepository;
 import vasilenko.serivces.ProjectTreeService;
 import vasilenko.serivces.ProjectTreeServiceImpl;
 import vasilenko.serivces.dto.TreeNode;
 
 import java.net.URLDecoder;
-import java.sql.Struct;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

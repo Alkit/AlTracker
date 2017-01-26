@@ -2,18 +2,16 @@ package vasilenko.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vasilenko.model.Employee;
 import vasilenko.model.Project;
 import vasilenko.model.Sprint;
 import vasilenko.model.Task;
 import vasilenko.repository.*;
+import vasilenko.repository.impl.JPASprintRepository;
+import vasilenko.web.form.TaskForm;
 
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,15 +30,18 @@ public class PMController {
     private SprintRepository sprintRepository;
     private TaskRepository taskRepository;
     private QualificationRepository qualificationRepository;
+    private JDBCRepository jdbcRepository;
 
     @Autowired
-    public PMController(EmployeeRepository employeeRepository,ProjectRepository projectRepository,
-                        SprintRepository sprintRepository,TaskRepository taskRepository,QualificationRepository qualificationRepository) {
+    public PMController(EmployeeRepository employeeRepository, ProjectRepository projectRepository,
+                        SprintRepository sprintRepository, TaskRepository taskRepository, QualificationRepository qualificationRepository,
+                        JDBCRepository jdbcRepository) {
         this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
         this.sprintRepository = sprintRepository;
         this.taskRepository =  taskRepository;
         this.qualificationRepository = qualificationRepository;
+        this.jdbcRepository = jdbcRepository;
     }
 
     @GetMapping
@@ -52,7 +53,7 @@ public class PMController {
     }
 
     @GetMapping("/details")
-    public String projectDetails(Model model, Principal principal){
+    public String projectDetails(Model model, Principal principal,TaskForm taskForm){
         Project project = projectRepository.findOne(pId);
         model.addAttribute("sprints",project.getSprintsByProjectId());
         model.addAttribute("quals", qualificationRepository.findAll());
@@ -89,5 +90,12 @@ public class PMController {
         Task task = taskRepository.findOne(taskId);
         model.addAttribute("task",task);
         return "pm/bodyParts/taskinfo";
+    }
+
+    @PostMapping("/add/task")
+    public String addTask(TaskForm taskForm){
+        jdbcRepository.saveTask(taskForm);
+        System.out.println(taskForm);
+        return "redirect:/pm/details/";
     }
 }

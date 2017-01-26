@@ -14,7 +14,7 @@
         <img th:src="@{/resources/images/icon.png}">
     </a>
     <a id="tasks" class="item"  th:href="@{/employee/mytasks}">Tasks</a>
-    <a id="requests" class="item" >Time Requests</a>
+    <a id="requests" class="item" th:href="@{/employee/request}">Time Requests</a>
     <a id="ptasks" class="item" th:href="@{/employee/props}">Proposed tasks</a>
     <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
 </div>
