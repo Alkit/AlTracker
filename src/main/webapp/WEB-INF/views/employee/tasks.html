@@ -13,46 +13,56 @@
     <a class="item" th:href="@{/employee/}">
         <img th:src="@{/resources/images/icon.png}">
     </a>
-    <a id="tasks" class="active item" >Tasks</a>
+    <a id="tasks" class="active item">Tasks</a>
     <a id="requests" class="item" th:href="@{/employee/request}">Time Requests</a>
     <a id="ptasks" class="item" th:href="@{/employee/props}">Proposed tasks</a>
-    <form class="item ui button" th:action="@{/logout}" method="post"><button class="linkButton" type="submit">Logout</button></form>
+    <form class="item ui button" th:action="@{/logout}" method="post">
+        <button class="linkButton" type="submit">Logout</button>
+    </form>
 </div>
-<div  class="ui main text container">
+<div class="ui main text container">
     <div id="load">
         <table class="ui celled table">
             <thead>
-            <tr><th>Task name</th>
+            <tr>
+                <th>Task name</th>
                 <th>Beginning date</th>
                 <th>Ending date</th>
                 <th> Estimate time</th>
                 <th></th>
-            </tr></thead>
+                <th></th>
+            </tr>
+            </thead>
             <tbody>
-            <tr th:each="task:${tasks}" >
+            <tr th:each="task:${tasks}">
                 <td th:text="${task.taskName}"></td>
                 <td th:text="${task.beginDate}"></td>
                 <td th:text="${task.endDate}"></td>
                 <td th:text="${task.estimateHours}"></td>
-                <td><div class="ui button request" th:value="${task.taskId}">Request time</div></td>
+                <td>
+                    <div class="ui button request" th:value="${task.taskId}">Request time</div>
+                </td>
+                <td>
+                    <div class="ui button complete" th:value="${task.taskId}">Confirm completion</div>
+                </td>
             </tr>
             </tbody>
         </table>
         <div class="ui small modal" id="requestForm"><i class="close icon"></i>
             <div class="ui dividing header">
-                Create task
+                Create request
             </div>
             <div class="center aligned content">
                 <div class="ui form" id="taskRequest">
                     <form action="" method="post">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <input type="hidden" id="taskIdForRequest"/>
-                            <div class="four wide field">
-                                <label>Amount of time</label>
-                                <div class="ui input" >
-                                    <input type="text" name="time">
-                                </div>
+                        <div class="four wide field">
+                            <label>Amount of time</label>
+                            <div class="ui input">
+                                <input type="text" name="time">
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -65,7 +75,30 @@
                 </button>
             </div>
         </div>
-
+        <div class="ui small modal" id="completeForm"><i class="close icon"></i>
+            <div class="center aligned content">
+                <div class="ui form" id="completeF">
+                    <form action="" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="taskForComplete"/>
+                        <div class="four wide field">
+                            <label>amount of time spent</label>
+                            <div class="ui input">
+                                <input type="text" name="timeSpent">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui black deny button">
+                    Cancel
+                </div>
+                <button class="ui primary submit button" type="submit">
+                    Add
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 <div>
