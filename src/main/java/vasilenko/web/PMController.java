@@ -9,7 +9,7 @@ import vasilenko.model.Project;
 import vasilenko.model.Sprint;
 import vasilenko.model.Task;
 import vasilenko.repository.*;
-import vasilenko.repository.impl.JPASprintRepository;
+import vasilenko.repository.impl.JDBCRepository;
 import vasilenko.web.form.TaskForm;
 
 import java.security.Principal;

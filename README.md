@@ -7,4 +7,4 @@ Template engine - Thymeleaf;
 Logger - Log4j;
 JSON library - jackson-databind
 
-Client-side: Jquerry, Semantic UI
+Client-side: JQuery, Semantic UI
