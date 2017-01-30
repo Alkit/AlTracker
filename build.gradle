@@ -3,14 +3,34 @@ version '0.1'
 
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'maven'
 apply plugin: 'idea'
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
     jcenter()
+}
+
+task writeNewPom << {
+    pom {
+        project {
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("pom.xml")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.3'
 }
 
 dependencies {

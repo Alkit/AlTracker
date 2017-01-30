@@ -98,4 +98,10 @@ public class PMController {
         System.out.println(taskForm);
         return "redirect:/pm/details/";
     }
+
+    @PostMapping("/delete/{taskId}")
+    public String deleteTask(@PathVariable int taskId){
+        taskRepository.delete(taskId);
+        return "redirect:/pm/details/";
+    }
 }
