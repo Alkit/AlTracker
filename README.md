@@ -8,3 +8,5 @@ Logger - Log4j;
 JSON library - jackson-databind
 
 Client-side: JQuery, JSTree, Semantic UI
+
+DB Scheme: http://i.imgur.com/vnyAf3g.png
