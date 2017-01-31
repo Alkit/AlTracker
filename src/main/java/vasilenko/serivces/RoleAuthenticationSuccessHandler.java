@@ -1,5 +1,7 @@
 package vasilenko.serivces;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -17,8 +19,10 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 @Component
 public class RoleAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    Logger logger = LoggerFactory.getLogger(RoleAuthenticationSuccessHandler.class);
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
@@ -40,7 +44,7 @@ public class RoleAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 
     protected String determineTargetUrl(Authentication authentication) {
         String url = "";
-        System.out.println("User loggined with name" + authentication.getName());
+        logger.info("User' login with name" + authentication.getName());
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
