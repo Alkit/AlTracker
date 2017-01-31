@@ -5,9 +5,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
-/**
- * Created by Alkit on 1/8/2017.
- */
+
 @Entity
 @Table(name = "employer_time_request", schema = "public", catalog = "Tracker")
 public class EmployerTimeRequest {

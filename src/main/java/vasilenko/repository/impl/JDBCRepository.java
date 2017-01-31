@@ -38,4 +38,16 @@ public class JDBCRepository {
         jdbc.update("INSERT INTO employer_time_request (emp_id, task_id, time_amount_hours, confirmed) VALUES (?,?,?,?)",
                 userId,taskId,timeAmount,false);
     }
+
+    public int getCountTaskByEmployee(int employee){
+        Integer count = jdbc.queryForObject("Select count(*) FROM task INNER JOIN employee ON task.executor=employee.emp_id WHERE employee.emp_id = "+employee,
+                 Integer.class);
+        return count;
+    }
+
+    public int getCountCompletedTaskByEmployee(int employee){
+        Integer count = jdbc.queryForObject("SELECT count(*) FROM task INNER JOIN employee ON task.executor=employee.emp_id" +
+                " WHERE task.hours_spented IS NOT NULL and employee.emp_id="+employee,Integer.class);
+        return count;
+    }
 }

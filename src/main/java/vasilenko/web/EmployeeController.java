@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.SessionScope;
+import vasilenko.model.Dependency;
 import vasilenko.model.Employee;
 import vasilenko.model.Task;
+import vasilenko.repository.DependencyRepository;
 import vasilenko.repository.EmployeeRepository;
 import vasilenko.repository.TaskRepository;
 import vasilenko.repository.impl.JDBCRepository;
@@ -29,13 +31,15 @@ public class EmployeeController {
     private EmployeeRepository employeeRepository;
     private TaskRepository taskRepository;
     private JDBCRepository jdbcRepository;
+    private DependencyRepository dependencyRepository;
 
     @Autowired
     public EmployeeController(EmployeeRepository employeeRepository, TaskRepository taskRepository,
-                              JDBCRepository jdbcRepository) {
+                              JDBCRepository jdbcRepository, DependencyRepository dependencyRepository) {
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
         this.jdbcRepository = jdbcRepository;
+        this.dependencyRepository = dependencyRepository;
     }
 
     @GetMapping
@@ -100,9 +104,21 @@ public class EmployeeController {
     public String confirmTaskComplete(@RequestBody MultiValueMap<String,String> formData){
         int taskId = Integer.parseInt(formData.get("taskForComplete").get(0));
         int timeAmount = Integer.parseInt(formData.get("timeSpent").get(0));
+        boolean dependTaskCompleted = true;
         Task task = taskRepository.findOne(taskId);
+        List<Dependency> list = dependencyRepository.findDependancyByTaskByTaskId(task);
+        for(Dependency dependency: list){
+            if(dependency.getTaskByDependTask().getHoursSpented() == null){
+                dependTaskCompleted = false;
+            }
+        }
+
+        if(dependTaskCompleted){
         task.setHoursSpented(timeAmount);
         taskRepository.save(task);
         return "redirect:/employee/mytasks";
+        }
+
+        else return "redirect:/error";
     }
 }

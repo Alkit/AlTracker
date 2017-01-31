@@ -6,9 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created by Alkit on 1/8/2017.
- */
+
 @Entity
 public class Sprint {
     private Integer sprintId;

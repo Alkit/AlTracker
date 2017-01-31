@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.Mapping;
 import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created by Alkit on 1/8/2017.
- */
+
 @Entity
 public class Employee {
     private Integer empId;

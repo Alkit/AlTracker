@@ -5,9 +5,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
-/**
- * Created by Alkit on 1/8/2017.
- */
+
 @Entity
 public class Dependency {
     private Integer depId;

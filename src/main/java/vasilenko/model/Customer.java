@@ -7,9 +7,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created by Alkit on 1/8/2017.
- */
+
 @Entity
 public class Customer {
     private Integer customerId;
