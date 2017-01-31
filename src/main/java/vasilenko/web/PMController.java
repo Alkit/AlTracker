@@ -16,9 +16,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Alkit on 1/15/2017.
- */
+
 @Controller
 @RequestMapping("/pm")
 @SessionAttributes("projectId")

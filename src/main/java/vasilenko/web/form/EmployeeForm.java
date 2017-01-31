@@ -1,8 +1,5 @@
 package vasilenko.web.form;
 
-/**
- * Created by Alkit on 1/12/2017.
- */
 public class EmployeeForm {
     private Integer empId;
     private String firstName;

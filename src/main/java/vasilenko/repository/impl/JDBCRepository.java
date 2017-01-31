@@ -33,4 +33,9 @@ public class JDBCRepository {
                 taskForm.getExecutor(),
                 max+1);
     }
+
+    public void addTimeRequest(int userId, int taskId, int timeAmount){
+        jdbc.update("INSERT INTO employer_time_request (emp_id, task_id, time_amount_hours, confirmed) VALUES (?,?,?,?)",
+                userId,taskId,timeAmount,false);
+    }
 }

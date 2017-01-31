@@ -2,9 +2,7 @@ package vasilenko.web.form;
 
 import java.sql.Date;
 
-/**
- * Created by Alkit on 1/11/2017.
- */
+
 public class ProjectForm {
     private Integer projectId;
     private String projectName;

@@ -1,8 +1,6 @@
 package vasilenko.serivces.dto;
 
-/**
- * Created by Alkit on 1/15/2017.
- */
+
 public class TreeNode {
     private final String id;
     private final String parent;

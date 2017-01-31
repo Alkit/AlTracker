@@ -14,9 +14,6 @@ import vasilenko.repository.EmployeeRepository;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Alkit on 1/13/2017.
- */
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 

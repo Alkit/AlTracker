@@ -5,15 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.SessionScope;
 import vasilenko.model.Employee;
 import vasilenko.model.Task;
 import vasilenko.repository.EmployeeRepository;
 import vasilenko.repository.TaskRepository;
+import vasilenko.repository.impl.JDBCRepository;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -29,11 +28,14 @@ public class EmployeeController {
 
     private EmployeeRepository employeeRepository;
     private TaskRepository taskRepository;
+    private JDBCRepository jdbcRepository;
 
     @Autowired
-    public EmployeeController(EmployeeRepository employeeRepository, TaskRepository taskRepository) {
+    public EmployeeController(EmployeeRepository employeeRepository, TaskRepository taskRepository,
+                              JDBCRepository jdbcRepository) {
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
+        this.jdbcRepository = jdbcRepository;
     }
 
     @GetMapping
@@ -50,6 +52,7 @@ public class EmployeeController {
         Collection<Task> taskCollection = e.getTasksByEmpId();
         List<Task> tasks = taskCollection.stream().filter(task -> task.getAccepted() != null)
                 .filter(task -> task.getAccepted())
+                .filter(task -> task.getHoursSpented() == null)
                 .collect(Collectors.toList());
         model.addAttribute("tasks",tasks);
         return "employee/tasks";
@@ -81,5 +84,25 @@ public class EmployeeController {
         taskRepository.save(task);
         return "redirect:/employee/props";
     }
- //   public String getTimeRequestPage
+
+    @PostMapping("/requestTime")
+    public String requestTime(@RequestBody MultiValueMap<String,String> formData){
+        Employee employee = employeeRepository.findEmployeeByEmail(empEmail);
+        int time = Integer.parseInt(formData.get("time").get(0));
+        int taskId = Integer.parseInt(formData.get("taskIdForRequest").get(0));
+        System.out.println(time);
+        System.out.println(taskId);
+        jdbcRepository.addTimeRequest(employee.getEmpId(),taskId,time);
+        return "redirect:/employee/mytasks";
+    }
+
+    @PostMapping("/confirmTask")
+    public String confirmTaskComplete(@RequestBody MultiValueMap<String,String> formData){
+        int taskId = Integer.parseInt(formData.get("taskForComplete").get(0));
+        int timeAmount = Integer.parseInt(formData.get("timeSpent").get(0));
+        Task task = taskRepository.findOne(taskId);
+        task.setHoursSpented(timeAmount);
+        taskRepository.save(task);
+        return "redirect:/employee/mytasks";
+    }
 }

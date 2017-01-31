@@ -12,9 +12,6 @@ import javax.persistence.Query;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Alkit on 1/7/2017.
- */
 
 @Repository
 @Transactional
