@@ -10,3 +10,5 @@ JSON library - jackson-databind
 Client-side: JQuery, JSTree, Semantic UI
 
 DB Scheme: http://i.imgur.com/vnyAf3g.png
+
+Архитектура приложения - MVC, в качестве слоя данных используеться паттерн Repository
