@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+/**
+ * Формирует модель проекта в вирде дерева для JStree
+ */
+
 @Service
 public class ProjectTreeServiceImpl implements ProjectTreeService {
 

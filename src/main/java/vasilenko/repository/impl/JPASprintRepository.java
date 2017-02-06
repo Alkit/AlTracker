@@ -32,6 +32,16 @@ public class JPASprintRepository implements SprintRepository {
         return query.getResultList();
     }
 
+    @Override
+    public List<EmployerTimeRequest> getAllTimeRequestsByProject(int projectId) {
+        Query query = entityManager
+                .createQuery("SELECT etr FROM EmployerTimeRequest as etr INNER JOIN etr.taskByTaskId as t" +
+                        " INNER JOIN t.sprintBySprintId as s INNER JOIN s.projectByProjectId as p" +
+                        " WHERE p.projectId=:pId");
+        query.setParameter("pId",projectId);
+        return query.getResultList();
+    }
+
     public Sprint findSprintById(int sprintId){
         Query query = entityManager.createQuery("Select s FROM Sprint as s WHERE s.sprintId=:sprintid");
         query.setParameter("sprintid",sprintId);
@@ -40,11 +50,17 @@ public class JPASprintRepository implements SprintRepository {
 
     public boolean save(Sprint sprint){
         entityManager.merge(sprint);
+        entityManager.flush();
         return entityManager.contains(sprint);
     }
 
     public boolean delete(Sprint sprint){
         entityManager.remove(entityManager.contains(sprint) ? sprint : entityManager.merge(sprint));
         return !entityManager.contains(sprint);
+    }
+
+    public List<Task> testJoin(){
+        Query query = entityManager.createQuery("Select t FROM Task as t INNER JOIN t.employeeByExecutor as e WHERE e.empId = 5");
+        return query.getResultList();
     }
 }

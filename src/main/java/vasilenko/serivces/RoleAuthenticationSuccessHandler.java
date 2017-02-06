@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Распределяет юзеров с по начальным страницам для их роли
+ */
 
 
 @Component
@@ -44,8 +47,8 @@ public class RoleAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 
     protected String determineTargetUrl(Authentication authentication) {
         String url = "";
-        logger.info("User' login with name " + authentication.getName());
-        System.out.println("User' login with name" + authentication.getName());
+        logger.info("User login with name " + authentication.getName());
+        System.out.println("User login with name" + authentication.getName());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         List<String> roles = new ArrayList<String>();

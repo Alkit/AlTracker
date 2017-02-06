@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import vasilenko.model.Employee;
-import vasilenko.model.Project;
-import vasilenko.model.Sprint;
-import vasilenko.model.Task;
+import vasilenko.model.*;
 import vasilenko.repository.*;
 import vasilenko.repository.impl.JDBCRepository;
 import vasilenko.web.form.TaskForm;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,5 +99,12 @@ public class PMController {
     public String deleteTask(@PathVariable int taskId){
         taskRepository.delete(taskId);
         return "redirect:/pm/details/";
+    }
+
+    @GetMapping("/timerequests")
+    public String getTimeRequests(Model model){
+        List<EmployerTimeRequest> requests = sprintRepository.getAllTimeRequestsByProject(pId);
+        model.addAttribute("requests",requests);
+        return "pm/timeRequests";
     }
 }

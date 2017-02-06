@@ -17,11 +17,13 @@ tree.jstree({
         "items": function () {
             return {
                 "Create": {
+
                     "label": "Create sprint",
                     "action": function (data) {
                         var ref = $.jstree.reference(data.reference);
                         sel = ref.get_selected();
-                        if(!sel.length) { return false; }
+                        if(!sel.length ) { return false; }
+
                         sel = sel[0];
                         sel = ref.create_node("p1", {"type":"file"});
                         if(sel) {
@@ -32,13 +34,17 @@ tree.jstree({
                 "Delete": {
                     "label": "Delete sprint",
                     "action": function (data) {
-                        console.log(data)
-
                         var ref = $.jstree.reference(data.reference),
                             sel = ref.get_selected();
-
                         if(!sel.length) { return false; }
                         ref.delete_node(sel);
+                        var deletedNode = sel[0]
+                        $.ajax({
+                            method: 'DELETE',
+                            async: true,
+                            data: deletedNode,
+                            url: '../../sprint/delete',
+                        })
                     }
                 }
             };
@@ -46,6 +52,11 @@ tree.jstree({
     }
 }).bind({
     "rename_node.jstree": function (e, data) {
+        if(tree.jstree().get_node(data.node)){
+            alert("already exists")
+            tree.jstree().delete_node(data.node)
+            return;
+        }
         $.ajax({
                 type: 'post',
                 async: true,
@@ -54,16 +65,6 @@ tree.jstree({
                 url: '../../sprint/add',
             }
         )
-    },
-    "delete_node.jstree": function (e, obj) {
-        console.log(obj.node.text)
-        var deletedNode = obj.node.text
-        $.ajax({
-            method: 'DELETE',
-            async: true,
-            data: deletedNode,
-            url: '../../sprint/delete',
-        })
     }
 });
 var pid = $('#projectInfo').attr('value')

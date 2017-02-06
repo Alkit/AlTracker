@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Admin page</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/adminStyle.css}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/resources/semantic.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+</head>
+
+<body>
+<div>
+    <div class="ui top stackable menu">
+        <a class="item">
+            <img th:src="@{/resources/images/icon.png}">
+        </a>
+        <a id="tasks" class="item" th:href="@{/pm/}">My Projects</a>
+        <a id="requests" class="item" th:href="@{/pm/timerequests}">Time requests</a>
+        <a id="ptasks" class="item">And some more</a>
+        <form class="item ui button" th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button class="linkButton" type="submit">Logout</button>
+        </form>
+    </div>
+    <div class="ui main text container">
+        <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Task name</th>
+                <th>Executor</th>
+                <th>Required time</th>
+                <th>Confirmed</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="req:${requests}">
+            <td th:text="${req.taskByTaskId.taskName}"></td>
+            <td th:text="${req.employeeByEmpId.firstName + ' ' + req.employeeByEmpId.lastName}"></td>
+            <td th:text="${req.timeAmountHours}"></td>
+            <td th:text="${req.confirmed}"></td>
+            <td>
+                <div class="ui button request" th:value="${req.etr}">Confirm</div>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script th:src="@{/resources/semantic.min.js}"></script>
+    <script th:src="@{/resources/js/uiscript.js}"></script>
+    <script th:src="@{/resources/js/pm.js}"></script>
+
+
+</div>
+</body>
+</html>
