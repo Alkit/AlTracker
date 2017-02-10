@@ -1,7 +1,7 @@
 
 
-var url = $('#url')
-var tree = $('#tree')
+var url = $('#url');
+var tree = $('#tree');
 tree.jstree({
     'core': {
         "check_callback": true,
@@ -43,7 +43,7 @@ tree.jstree({
                             method: 'DELETE',
                             async: true,
                             data: deletedNode,
-                            url: '../../sprint/delete',
+                            url: '../../sprint/delete'
                         })
                     }
                 }
@@ -53,8 +53,8 @@ tree.jstree({
 }).bind({
     "rename_node.jstree": function (e, data) {
         if(tree.jstree().get_node(data.node)){
-            alert("already exists")
-            tree.jstree().delete_node(data.node)
+            alert("already exists");
+            tree.jstree().delete_node(data.node);
             return;
         }
         $.ajax({
@@ -62,7 +62,7 @@ tree.jstree({
                 async: true,
                 dataType: 'json',
                 data: data.node.text,
-                url: '../../sprint/add',
+                url: '../../sprint/add'
             }
         )
     }
@@ -142,3 +142,15 @@ $('#taskF').form({
         }
     }
 });
+
+$('.etr').on('click',function () {
+    var etrId = $(this).attr('value')
+    console.log(etrId)
+
+    $.ajax({
+        type: 'post',
+        async: true,
+        url: 'acceptTr/'+etrId
+    })
+    //$(this).parent().parent().parent().remove()
+})

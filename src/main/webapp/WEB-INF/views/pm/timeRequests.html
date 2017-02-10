@@ -33,7 +33,6 @@
                 <th>Task name</th>
                 <th>Executor</th>
                 <th>Required time</th>
-                <th>Confirmed</th>
                 <th></th>
             </tr>
         </thead>
@@ -42,9 +41,9 @@
             <td th:text="${req.taskByTaskId.taskName}"></td>
             <td th:text="${req.employeeByEmpId.firstName + ' ' + req.employeeByEmpId.lastName}"></td>
             <td th:text="${req.timeAmountHours}"></td>
-            <td th:text="${req.confirmed}"></td>
             <td>
-                <div class="ui button request" th:value="${req.etr}">Confirm</div>
+                <div class="ui button etr" th:if="${!req.confirmed}" th:value="${req.etr}">Confirm</div>
+                <div th:unless="${!req.confirmed}">has been accepted</div>
             </td>
         </tr>
         </tbody>

@@ -1,6 +1,7 @@
 package vasilenko.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,17 +28,19 @@ public class PMController {
     private TaskRepository taskRepository;
     private QualificationRepository qualificationRepository;
     private JDBCRepository jdbcRepository;
+    private ETRRepository etr;
 
     @Autowired
     public PMController(EmployeeRepository employeeRepository, ProjectRepository projectRepository,
                         SprintRepository sprintRepository, TaskRepository taskRepository, QualificationRepository qualificationRepository,
-                        JDBCRepository jdbcRepository) {
+                        JDBCRepository jdbcRepository,ETRRepository etr) {
         this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
         this.sprintRepository = sprintRepository;
         this.taskRepository =  taskRepository;
         this.qualificationRepository = qualificationRepository;
         this.jdbcRepository = jdbcRepository;
+        this.etr = etr;
     }
 
     @GetMapping
@@ -106,5 +109,13 @@ public class PMController {
         List<EmployerTimeRequest> requests = sprintRepository.getAllTimeRequestsByProject(pId);
         model.addAttribute("requests",requests);
         return "pm/timeRequests";
+    }
+
+    @PostMapping("/acceptTr/{etrId}")
+    public String confirmTimeRequest(@PathVariable int etrId){
+        EmployerTimeRequest empTimeRequest = etr.findOne(etrId);
+        empTimeRequest.setConfirmed(true);
+        etr.save(empTimeRequest);
+        return "redirect:/pm/timerequests";
     }
 }
