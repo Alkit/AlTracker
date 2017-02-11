@@ -65,6 +65,7 @@ tree.jstree({
             }
         )
     }
+
 });
 var pid = $('#projectInfo').attr('value')
 $('#projectInfo').load('../project/'+pid)
