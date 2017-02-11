@@ -52,17 +52,16 @@ tree.jstree({
     }
 }).bind({
     "rename_node.jstree": function (e, data) {
-        if(tree.jstree().get_node(data.node)){
-            alert("already exists");
-            tree.jstree().delete_node(data.node);
-            return;
-        }
+
         $.ajax({
                 type: 'post',
                 async: true,
                 dataType: 'json',
                 data: data.node.text,
-                url: '../../sprint/add'
+                url: '../../sprint/add',
+                error: function (e) {
+                    tree.jstree().delete_node(data.node);
+                }
             }
         )
     }
