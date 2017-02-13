@@ -7,7 +7,6 @@ import vasilenko.model.Project;
 import vasilenko.model.Sprint;
 import vasilenko.repository.ProjectRepository;
 import vasilenko.repository.SprintRepository;
-import vasilenko.repository.impl.JPASprintRepository;
 import vasilenko.serivces.ProjectTreeService;
 import vasilenko.serivces.ProjectTreeServiceImpl;
 import vasilenko.serivces.dto.TreeNode;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 public class TreeController {
     private Project project;
-    private int projecID;
+    private int projecId;
 
     @Autowired
     public TreeController(ProjectTreeServiceImpl projectTreeService, SprintRepository sprintRepository, ProjectRepository projectRepository) {
@@ -37,7 +36,7 @@ public class TreeController {
     @GetMapping("/api/{pId}")
     public List<TreeNode> getTree(@PathVariable int pId){
         project = projectRepository.findOne(pId);
-        projecID = pId;
+        projecId = pId;
         return projectTreeService.getProjectTree(pId);
     }
 
@@ -45,7 +44,7 @@ public class TreeController {
     public int addSprint(@RequestBody String newSprint) throws Exception
     {
         System.out.println("executed");
-        project = projectRepository.findOne(projecID);
+        project = projectRepository.findOne(projecId);
         newSprint = URLDecoder.decode(newSprint,"UTF-8");
         newSprint = newSprint.replace("+","").replace("=","");
         List<Sprint> sprints = project.getSprintsByProjectId().stream().sorted(Comparator.comparing(Sprint::getSprintNumber)).collect(Collectors.toList());
@@ -66,7 +65,7 @@ public class TreeController {
     @RequestMapping(value = "/sprint/delete", method = RequestMethod.DELETE)
     public void deleteSprint(@RequestBody String sprintId){
         int id = Integer.parseInt(sprintId.substring(1));
-        project = projectRepository.findOne(projecID);
+        project = projectRepository.findOne(projecId);
         Sprint sprint = project.getSprintsByProjectId().stream().filter(s -> s.getSprintId().equals(id)).findFirst().get();
         sprintRepository.delete(sprint);
     }

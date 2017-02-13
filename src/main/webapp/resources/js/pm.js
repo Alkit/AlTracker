@@ -52,7 +52,6 @@ tree.jstree({
     }
 }).bind({
     "rename_node.jstree": function (e, data) {
-
         $.ajax({
                 type: 'post',
                 async: true,

@@ -78,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/pm").hasRole("PM")
                 .mvcMatchers("/api/*").hasRole("PM")
                 .mvcMatchers("/sprint/*").hasRole("PM")
+                .mvcMatchers("/report/*").hasRole("PM")
                 .anyRequest()
                 .permitAll();
     }

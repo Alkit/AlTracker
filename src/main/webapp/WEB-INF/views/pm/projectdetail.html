@@ -27,10 +27,18 @@
         </form>
     </div>
     <div class="ui main four column grid container">
-        <div class="column">
+        <div class="three wide column">
             <div class="ui button" id="addTask">Add task</div>
             <div id="tree"></div>
-        </div>
+            <div class="ui"></div>
+            <a class="ui ribbon label">Get report</a>
+            <div class="two wide row">
+                <div class="column inline"><a class="ui red button" th:href="${'../../report/pdf/' + projectId}"><i class="file pdf outline icon"></i><label>PDF</label></a></div>
+                <div class="column inline"><a class="ui teal button" th:href="${'../../report/xls/' + projectId}"><i class="file excel outline icon"></i><label>XLS</label></a></div>
+            </div></div>
+
+
+
         <div class="twelve wide column">
             <h3 class="ui center aligned header">Project info</h3>
             <div class="ui two column stackable grid" id="projectInfo" th:value="${projectId}">
